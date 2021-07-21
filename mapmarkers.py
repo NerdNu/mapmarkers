@@ -127,14 +127,18 @@ def loadMaps(mapsDir, world):
         if nbt.root['data']['dimension'] == 'minecraft:' + world:
             match = re.match(pattern, file)
             mapID = int(match.group(1))
-            x = int(nbt.root['data']['xCenter'].real)
-            z = int(nbt.root['data']['zCenter'].real)
-            allMaps[mapID] = {'x': x, 'z': z}
+            scale = int(nbt.root['data']['scale'].real)
 
-            coordsKey = f'{x}:{z}'
-            #debug(f'{mapID} -> {coordsKey}')
-            if coordsKey not in highestMapID or highestMapID[coordsKey] < mapID:
-                highestMapID[coordsKey] = mapID
+            # Ignore zoomed out maps.
+            if scale == 0:
+                x = int(nbt.root['data']['xCenter'].real)
+                z = int(nbt.root['data']['zCenter'].real)
+                allMaps[mapID] = {'x': x, 'z': z}
+
+                coordsKey = f'{x}:{z}'
+                #debug(f'{mapID} -> {coordsKey}')
+                if coordsKey not in highestMapID or highestMapID[coordsKey] < mapID:
+                    highestMapID[coordsKey] = mapID
 
     # Add the highest map ID at a given coordinate pair to the result.
     result = {}
