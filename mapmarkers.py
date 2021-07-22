@@ -128,9 +128,10 @@ def loadMaps(mapsDir, world):
             match = re.match(pattern, file)
             mapID = int(match.group(1))
             scale = int(nbt.root['data']['scale'].real)
+            frames = nbt.root['data']['frames']
 
-            # Ignore zoomed out maps.
-            if scale == 0:
+            # Ignore zoomed out maps and those maps not placed in an item frame.
+            if scale == 0 and len(frames) > 0:
                 x = int(nbt.root['data']['xCenter'].real)
                 z = int(nbt.root['data']['zCenter'].real)
                 allMaps[mapID] = {'x': x, 'z': z}
