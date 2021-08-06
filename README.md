@@ -62,3 +62,12 @@ To install library dependencies, run these commands:
 pip3 install PyYAML
 pip3 install nbtlib
 ```
+
+
+## Bugs/Quirks
+
+Intermittently, map markers will not appear for some map items placed in item frames.
+This is because the corresponding `map_<n>.dat` file does not list the map as having
+been placed in an item frame. This is a bug in Mojang or Spigot/Paper code.
+
+To make the marker appear, pop the item out of the frame and place it again.
